@@ -13,7 +13,7 @@
     return ('getComputedStyle' in window) ? window.getComputedStyle(el[0])[name] : el.css(name);
   };
 
-  var template = '<md-dialog class="dtp" layout="column" style="width: 300px;">'
+  var template = '<md-dialog class="dtp" layout="column" style="width: 322px;">'
     + '    <md-dialog-content class="dtp-content">'
     + '        <div class="dtp-date-view">'
     + '            <header class="dtp-header">'
@@ -29,9 +29,11 @@
     + '                </div>'
     + '                <div class="dtp-actual-num">{{picker.currentDate.format("DD")}}</div>'
     + '                <div layout="row">'
-    + ' <div ng-click="picker.incrementYear(-1)" class="dtp-year-btn dtp-year-btn-prev" flex="30"><span ng-if="picker.isPreviousYearVisible()" >&#x25B2;</span></div>'
+    + ' <div ng-click="picker.incrementYear(-1)" class="dtp-year-btn dtp-year-btn-prev" flex="15"><span ng-if="picker.isPreviousYearVisible()" >&#x25C4;</span></div>'
+    + ' <div ng-click="picker.incrementMonth(-1)" class="dtp-month-btn dtp-month-btn-prev" flex="10"><span ng-if="picker.isPreviousMonthVisible()" >&#x25C2;</span></div>'
     + '                    <div class="dtp-actual-year" flex>{{picker.currentDate.format("YYYY")}}</div>'
-    + ' <div ng-click="picker.incrementYear(1)" class="dtp-year-btn dtp-year-btn-next" flex="30"><span ng-if="picker.isNextYearVisible()" >&#x25BC;</span></div>'
+    + ' <div ng-click="picker.incrementMonth(1)" class="dtp-month-btn dtp-month-btn-next" flex="10"><span ng-if="picker.isNextMonthVisible()" >&#x25B8;</span></div>'
+    + ' <div ng-click="picker.incrementYear(1)" class="dtp-year-btn dtp-year-btn-next" flex="15"><span ng-if="picker.isNextYearVisible()" >&#x25BA;</span></div>'
     + '                </div>'
     + '            </div>'//start time
     + '            <div class="dtp-time" ng-show="picker.params.time && !picker.params.date">'
@@ -447,9 +449,17 @@
         this.selectDate(this.currentDate.add(amount, 'year'));
       }
     },
-    isPreviousMonthVisible: function () {
-      return this.calendarStart && this.isAfterMinDate(moment(this.calendarStart).startOf('month'), false, false);
-    },
+    incrementMonth: function (amount) {
+        if (amount === 1 && this.isNextMonthVisible()) {
+            this.selectDate(this.currentDate.add(amount, 'month'));
+        }
+
+        if (amount === -1 && this.isPreviousMonthVisible()) {
+            this.selectDate(this.currentDate.add(amount, 'month'));
+        }
+    },    isPreviousMonthVisible: function () {
+    return this.calendarStart && this.isAfterMinDate(moment(this.calendarStart).startOf('month'), false, false);
+  },
     isNextMonthVisible: function () {
       return this.calendarStart && this.isBeforeMaxDate(moment(this.calendarStart).endOf('month'), false, false);
     },
@@ -587,6 +597,7 @@
           YEAR_MAX = new Date().getFullYear() + 30,
           MONTHS_IN_ALL = (YEAR_MAX - YEAR_MIN + 1) * 12,
           ITEM_HEIGHT = 240,
+          ITEM_WIDTH = 302,
           MONTHS = [];
         for (var i = 0; i < MONTHS_IN_ALL; i++) {
           MONTHS.push(i);
@@ -722,8 +733,9 @@
               }
             }
           }],
-          template: '<md-virtual-repeat-container md-top-index="cal.topIndex" class="months">' +
-          '<div md-virtual-repeat="idx in ::cal.months" md-auto-shrink md-item-size="' + ITEM_HEIGHT + '">' +
+          template: '<md-virtual-repeat-container md-top-index="cal.topIndex" class="months" md-orient-horizontal md-auto-shrink>' +
+          '<div md-virtual-repeat="idx in ::cal.months" md-item-size="' + ITEM_WIDTH + '" flex>' +
+//          '<div md-virtual-repeat="idx in ::cal.months" flex>' +
           '     <div mdc-datetime-picker-calendar-month idx="idx"></div>' +
           '</div>' +
           '</md-virtual-repeat-container>'

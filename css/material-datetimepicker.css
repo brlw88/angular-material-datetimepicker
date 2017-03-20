@@ -4,7 +4,7 @@ md-dialog.dtp {
     color: #333;
     background-color: #fff;
     max-height: none;
-    min-width: 300px;
+    min-width: 322px;
 }
 
 
@@ -35,7 +35,7 @@ md-dialog.dtp {
 }
 
 .dtp > .dtp-content {
-    max-width: 300px;
+    max-width: 322px;
     max-height: 500px;
 }
 
@@ -77,19 +77,19 @@ md-dialog.dtp {
     color: #DCEDC8;
 }
 
-.dtp div.dtp-year-btn {
-    font-size: 1.4em;
+.dtp div.dtp-year-btn, .dtp div.dtp-month-btn  {
+    font-size: 2em;
     line-height: 30px;
     cursor: pointer;
     color: #DCEDC8;
 }
 
-.dtp div.dtp-year-btn-prev {
+.dtp div.dtp-year-btn-prev, .dtp div.dtp-month-btn-prev {
     text-align: right;
 }
 
 
-.dtp div.dtp-year-btn-next {
+.dtp div.dtp-year-btn-next, .dtp div.dtp-month-btn-next {
     text-align: left;
 }
 
@@ -129,6 +129,13 @@ md-dialog.dtp {
 
 .dtp md-virtual-repeat-container.months {
     height: 260px;
+}
+
+.dtp md-virtual-repeat-container.months .md-virtual-repeat-scroller .md-virtual-repeat-offsetter .flex {
+    display: inline-block;
+    width: 302px;
+    padding-left: 11px;
+    padding-right: 11px;
 }
 
 .dtp table.dtp-picker-days, .dtp table.dtp-picker-days tr, .dtp table.dtp-picker-days tr > td {
@@ -189,7 +196,7 @@ md-dialog.dtp {
     color: #757575;
     text-align: center;
     font-weight: 700;
-    padding: 4px 3px;
+    padding: 2px 1px;
     width: 38px;
     height: 28px;
 }
